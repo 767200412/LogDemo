@@ -1,9 +1,16 @@
 package comdemo.example.dell.logdemo;
 
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
 import android.text.TextWatcher;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.StyleSpan;
 import android.widget.EditText;
 
 public class MainActivity extends AppCompatActivity {
@@ -50,7 +57,15 @@ public class MainActivity extends AppCompatActivity {
                             index--;
                         }
                     }
-                    mEditTextPhoneNumber.setText(stringBuilder.toString());
+
+                    //设置粗体
+                    SpannableStringBuilder ssb = new SpannableStringBuilder(stringBuilder.toString());
+                    ssb.setSpan(new StyleSpan(Typeface.BOLD_ITALIC), 0, stringBuilder.toString().length(), Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+                    //ssb.setSpan(new ForegroundColorSpan(Color.BLACK), 0, stringBuilder.toString().length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    mEditTextPhoneNumber.setText(ssb);
+
+                    //mEditTextPhoneNumber.setText(stringBuilder.toString());
+                    mEditTextPhoneNumber.setTextColor(Color.BLACK);
                     mEditTextPhoneNumber.setSelection(index);
                 }
 
@@ -58,7 +73,6 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-
             }
         });
     }
