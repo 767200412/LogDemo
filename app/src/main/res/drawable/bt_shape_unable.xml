@@ -8,8 +8,8 @@
     <solid android:color="#ffaccfff"/>
     <!-- corners用于创建圆角（只用于形状是矩形）-->
     <corners
-    android:topLeftRadius="21dp"
-    android:topRightRadius="21dp"
-    android:bottomLeftRadius="21dp"
-    android:bottomRightRadius="21dp"/>
+        android:topLeftRadius="21dp"
+        android:topRightRadius="21dp"
+        android:bottomLeftRadius="21dp"
+        android:bottomRightRadius="21dp"/>
 </shape>

@@ -11,22 +11,36 @@ import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.SpannedString;
 import android.text.TextWatcher;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.text.style.AbsoluteSizeSpan;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.StyleSpan;
+import android.util.Log;
+import android.view.MotionEvent;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 
 public class MainActivity extends AppCompatActivity {
 
     private EditText mEditTextPhoneNumber;
     private EditText mEditTextPassword;
+    private Button mButtonLog;
+    private ImageButton mImageBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //初始化
         mEditTextPhoneNumber = (EditText)findViewById(R.id.et_PhoneNumber);
         mEditTextPassword = (EditText)findViewById(R.id.et_PassWord);
+        mButtonLog = (Button)findViewById(R.id.bt_log);
+        mImageBtn = (ImageButton)findViewById(R.id.imageButton);
+        mButtonLog.setEnabled(true);
+
         //设置输入框的提示字符hint
         // 新建一个可以添加属性的文本对象
         SpannableString ss = new SpannableString("请输入手机号");
@@ -94,7 +108,35 @@ public class MainActivity extends AppCompatActivity {
             public void afterTextChanged(Editable s) {
             }
         });
-    }
 
+        //密码的显示/隐藏
+        mImageBtn.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if(event.getAction() == MotionEvent.ACTION_DOWN){
+                    //重新设置按下时的背景图片
+                    //((ImageButton)v).setImageDrawable(getResources().getDrawable(R.drawable.android_btn_pressed));
+                    mEditTextPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                }else if(event.getAction() == MotionEvent.ACTION_UP){
+                    //再修改为抬起时的正常图片
+                    // ((ImageButton)v).setImageDrawable(getResources().getDrawable(R.drawable.ic_little_eye_hide));
+                    mEditTextPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                }
+                return false;
+            }
+        });
+
+        //实现按钮的激活/未激活状态
+        String e1 = null;
+        String e2 = null;
+        e1 = mEditTextPhoneNumber.getText().toString();
+        e2 = mEditTextPassword.getText().toString();
+        if(e1!= null && e2!=null){
+            mButtonLog.setEnabled(true);
+        }
+
+
+
+    }
 
 }
