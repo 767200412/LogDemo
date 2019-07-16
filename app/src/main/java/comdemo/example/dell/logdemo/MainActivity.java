@@ -2,6 +2,7 @@ package comdemo.example.dell.logdemo;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
@@ -26,6 +27,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
@@ -35,7 +37,8 @@ public class MainActivity extends AppCompatActivity {
     private Button mButtonLog;
     private ImageButton mImageBtn;
     private MyDialog myDialog;
-    private int wrongNumber =1;
+    private TextView mTvReg;
+    private int wrongNumber =0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
         mEditTextPassword = (EditText)findViewById(R.id.et_PassWord);
         mButtonLog = (Button)findViewById(R.id.bt_log);
         mImageBtn = (ImageButton)findViewById(R.id.imageButton);
-
+        mTvReg = (TextView)findViewById(R.id.textView11);
 
         //设置输入框的提示字符hint
         // 新建一个可以添加属性的文本对象
@@ -62,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
         mEditTextPhoneNumber.setHint(new SpannedString(ss)); // 一定要进行转换,否则属性会消失
         mEditTextPassword.setHint(new SpannableString(ss2));
 
+        //限制按钮激活
         new SomeMonitorEditText().SetMonitorEditText(mButtonLog, mEditTextPassword,mEditTextPhoneNumber);
 
         //关键部分:自动分隔手机号码通过addTextChangedListener()实现
@@ -157,13 +161,22 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //点击注册
+       mTvReg.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               Intent intent = new Intent(MainActivity.this,Register.class);
+               startActivity(intent);
+           }
+       });
+
     }
 
 
 
     private void SomeWrongDialog(){
         myDialog=new MyDialog(MainActivity.this,R.style.MyDialog);
-        myDialog.setTitle("警告！");
+        //myDialog.setTitle("警告！");
         myDialog.setMessage("账号或者密码错误，请重新输入");
         myDialog.setYesOnclickListener("确定", new MyDialog.onYesOnclickListener() {
             @Override
@@ -177,7 +190,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void FindPassWordDialog(){
         myDialog=new MyDialog(MainActivity.this,R.style.MyDialog);
-        myDialog.setTitle("警告！");
+        //myDialog.setTitle("警告！");
         myDialog.setMessage("密码错误，找回密码？");
         myDialog.setYesOnclickListener("确定", new MyDialog.onYesOnclickListener() {
             @Override
