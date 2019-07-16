@@ -36,9 +36,9 @@
         android:text="登录"
         android:textColor="#ffffffff"
         android:textSize="15sp"
-        app:layout_constraintEnd_toEndOf="@+id/editText4"
-        app:layout_constraintStart_toStartOf="@+id/editText4"
-        app:layout_constraintTop_toBottomOf="@+id/editText4" />
+        app:layout_constraintEnd_toEndOf="@+id/et_PassWord"
+        app:layout_constraintStart_toStartOf="@+id/et_PassWord"
+        app:layout_constraintTop_toBottomOf="@+id/et_PassWord" />
 
     <TextView
         android:id="@+id/textView5"
@@ -104,6 +104,8 @@
         app:layout_constraintHorizontal_bias="0.9"
         app:layout_constraintVertical_bias = "0.1"/>
 
+
+    <!--输入框 输入手机号-->
     <EditText
         android:id="@+id/et_PhoneNumber"
         android:layout_width="0dp"
@@ -111,24 +113,19 @@
         android:layout_marginTop="52dp"
         android:ems="10"
         android:inputType="number"
-        android:text="输入手机号码"
-        android:textColor="#ffcccccc"
-        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="@+id/imageView4"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/textView10"
         app:layout_constraintTop_toBottomOf="@+id/textView11" />
 
+    <!--输入框 输入手机号-->
     <EditText
-        android:id="@+id/editText4"
+        android:id="@+id/et_PassWord"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="27dp"
         android:ems="10"
-        android:inputType="numberSigned"
-        android:text="请输入密码"
-        android:textColor="#ffcccccc"
-        android:textSize="20sp"
+        android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="@+id/et_PhoneNumber"
         app:layout_constraintStart_toStartOf="@+id/et_PhoneNumber"
         app:layout_constraintTop_toBottomOf="@+id/et_PhoneNumber" />
