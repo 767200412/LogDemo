@@ -1,5 +1,7 @@
 package comdemo.example.dell.logdemo;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
@@ -32,6 +34,8 @@ public class MainActivity extends AppCompatActivity {
     private EditText mEditTextPassword;
     private Button mButtonLog;
     private ImageButton mImageBtn;
+    private MyDialog myDialog;
+    private int wrongNumber =1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -140,12 +144,56 @@ public class MainActivity extends AppCompatActivity {
         mButtonLog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+               if(mEditTextPhoneNumber.getText().toString().equals("10086") && mEditTextPassword.getText().toString().equals("123456")){
+                   //跳转到首页
+               }
+               else if(wrongNumber <=5){
+                   SomeWrongDialog();
+                   wrongNumber++;
+               }
+               else {
+                   FindPassWordDialog();
+               }
             }
         });
 
+    }
 
 
+
+    private void SomeWrongDialog(){
+        myDialog=new MyDialog(MainActivity.this,R.style.MyDialog);
+        myDialog.setTitle("警告！");
+        myDialog.setMessage("账号或者密码错误，请重新输入");
+        myDialog.setYesOnclickListener("确定", new MyDialog.onYesOnclickListener() {
+            @Override
+            public void onYesOnclick() {
+                myDialog.dismiss();
+            }
+        });
+
+        myDialog.show();
+    }
+
+    private void FindPassWordDialog(){
+        myDialog=new MyDialog(MainActivity.this,R.style.MyDialog);
+        myDialog.setTitle("警告！");
+        myDialog.setMessage("密码错误，找回密码？");
+        myDialog.setYesOnclickListener("确定", new MyDialog.onYesOnclickListener() {
+            @Override
+            public void onYesOnclick() {
+                myDialog.dismiss();
+                //前往密码忘记页面 带入手机值
+            }
+        });
+        myDialog.setNoOnclickListener("取消", new MyDialog.onNoOnclickListener() {
+            @Override
+            public void onNoClick() {
+                myDialog.dismiss();
+                //返回
+            }
+        });
+        myDialog.show();
     }
 
 }
