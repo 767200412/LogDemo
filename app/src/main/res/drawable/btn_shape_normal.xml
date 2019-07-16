@@ -5,11 +5,11 @@
 
 
     <!-- solid用于设置填充形状的颜色-->
-    <solid android:color="#ffaccfff"/>
+    <solid android:color="#ff4694ff"/>//#ff4694ff
     <!-- corners用于创建圆角（只用于形状是矩形）-->
     <corners
-        android:topLeftRadius="21dp"
-        android:topRightRadius="21dp"
-        android:bottomLeftRadius="21dp"
-        android:bottomRightRadius="21dp"/>
+    android:topLeftRadius="21dp"
+    android:topRightRadius="21dp"
+    android:bottomLeftRadius="21dp"
+    android:bottomRightRadius="21dp"/>
 </shape>

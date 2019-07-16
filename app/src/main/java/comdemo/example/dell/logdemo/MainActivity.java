@@ -2,6 +2,7 @@ package comdemo.example.dell.logdemo;
 
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.drawable.GradientDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -10,6 +11,7 @@ import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.SpannedString;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
@@ -22,6 +24,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -39,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
         mEditTextPassword = (EditText)findViewById(R.id.et_PassWord);
         mButtonLog = (Button)findViewById(R.id.bt_log);
         mImageBtn = (ImageButton)findViewById(R.id.imageButton);
-        mButtonLog.setEnabled(true);
+
 
         //设置输入框的提示字符hint
         // 新建一个可以添加属性的文本对象
@@ -55,6 +58,8 @@ public class MainActivity extends AppCompatActivity {
         mEditTextPhoneNumber.setHint(new SpannedString(ss)); // 一定要进行转换,否则属性会消失
         mEditTextPassword.setHint(new SpannableString(ss2));
 
+        new SomeMonitorEditText().SetMonitorEditText(mButtonLog, mEditTextPassword,mEditTextPhoneNumber);
+
         //关键部分:自动分隔手机号码通过addTextChangedListener()实现
         mEditTextPhoneNumber.addTextChangedListener(new TextWatcher() {
             @Override
@@ -63,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+
                 if (s == null || s.length() == 0)
                     return;
                 StringBuilder stringBuilder = new StringBuilder();
@@ -126,14 +132,17 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        //实现按钮的激活/未激活状态
-        String e1 = null;
-        String e2 = null;
-        e1 = mEditTextPhoneNumber.getText().toString();
-        e2 = mEditTextPassword.getText().toString();
-        if(e1!= null && e2!=null){
-            mButtonLog.setEnabled(true);
-        }
+
+
+
+
+        //点击登录
+        mButtonLog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 
 
 
