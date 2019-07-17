@@ -19,7 +19,10 @@
         <activity android:name=".Register" />
         <activity android:name=".MessageVerification" />
         <activity android:name=".Password" />
-        <activity android:name=".ReallyName"></activity>
+        <activity android:name=".ReallyName" />
+        <activity android:name=".VerificationLog" />
+        <activity android:name=".FindPassword" />
+        <activity android:name=".NewPassword"></activity>
     </application>
 
 </manifest>

@@ -46,6 +46,8 @@ public class Register extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Register.this,MessageVerification.class);
+                intent.putExtra("phone",mEtNumber.getText().toString());
+                intent.putExtra("type","register");
                 startActivity(intent);
             }
         });

@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
     private ImageButton mImageBtn;
     private MyDialog myDialog;
     private MyDialog2 myDialog2;
-    private TextView mTvReg;
+    private TextView mTvReg,mTvLog,mTvForget;
     private int wrongNumber =0;
 
     @Override
@@ -51,6 +51,8 @@ public class MainActivity extends AppCompatActivity {
         mButtonLog = (Button)findViewById(R.id.bt_log);
         mImageBtn = (ImageButton)findViewById(R.id.imageButton);
         mTvReg = (TextView)findViewById(R.id.textView11);
+        mTvLog = (TextView)findViewById(R.id.textView7);
+        mTvForget = (TextView)findViewById(R.id.textView5);
 
         //设置输入框的提示字符hint
         // 新建一个可以添加属性的文本对象
@@ -171,6 +173,26 @@ public class MainActivity extends AppCompatActivity {
                startActivity(intent);
            }
        });
+
+       //点击忘记密码
+        mTvForget.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this,FindPassword.class);
+                intent.putExtra("phone",mEditTextPhoneNumber.getText().toString());
+                startActivity(intent);
+            }
+        });
+
+        //点击验证码登录
+        mTvLog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this,VerificationLog.class);
+                intent.putExtra("phone",mEditTextPhoneNumber.getText().toString());
+                startActivity(intent);
+            }
+        });
 
     }
 

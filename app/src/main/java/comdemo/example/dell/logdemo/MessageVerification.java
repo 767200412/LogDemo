@@ -6,11 +6,14 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.EditText;
+import android.widget.TextView;
 
 public class MessageVerification extends AppCompatActivity implements TextWatcher {
 
     private EditText editText1,editText2,editText3,editText4;
+    private TextView mTvPhone;
     private MyDialog2 myDialog2;
+    private String type;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -19,6 +22,11 @@ public class MessageVerification extends AppCompatActivity implements TextWatche
         editText2 = (EditText)findViewById(R.id.editText7);
         editText3 = (EditText)findViewById(R.id.editText8);
         editText4 = (EditText)findViewById(R.id.editText9);
+        mTvPhone = (TextView)findViewById(R.id.textView3);
+        Intent intent = getIntent();//声明一个对象，并获得跳转过来的Intent对象
+        String phone = intent.getStringExtra("phone");//从intent对象中获得数据
+        type = intent.getStringExtra("type");
+        mTvPhone.setText(phone);
         editText1.addTextChangedListener(this);
         editText2.addTextChangedListener(this);
         editText3.addTextChangedListener(this);
@@ -62,9 +70,26 @@ public class MessageVerification extends AppCompatActivity implements TextWatche
                 boolean ok  = true;
                 if(ok)
                 {
-                    //跳转到设置密码
-                    Intent intent = new Intent(MessageVerification.this,Password.class);
-                    startActivity(intent);
+                    if(type.equals("register"))
+                    {
+                        //跳转到设置密码
+                        Intent intent = new Intent(MessageVerification.this,Password.class);
+                        startActivity(intent);
+                    }
+                    else if(type.equals("log"))
+                    {
+                        //判断手机是否注册
+
+
+                       // 跳转到首页
+                    }
+                    else if(type.equals("find"))
+                    {
+                        //跳转到设置新密码页面
+                        Intent intent = new Intent(MessageVerification.this,NewPassword.class);
+                        startActivity(intent);
+                    }
+
                 }
                 else
                 {
