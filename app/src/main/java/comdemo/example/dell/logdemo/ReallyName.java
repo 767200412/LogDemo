@@ -10,19 +10,21 @@ import android.text.style.AbsoluteSizeSpan;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 
 public class ReallyName extends AppCompatActivity {
 
     private Button mBtnNext;
     private EditText mEtReallyName;
     private MyDialog myDialog;
+    private ImageButton mImageBtn2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_really_name);
         mBtnNext = (Button) findViewById(R.id.bt_log);
         mEtReallyName = (EditText) findViewById(R.id.et_ReName);
-
+        mImageBtn2 = (ImageButton)findViewById(R.id.imageButton2);
 
         SpannableString ss = new SpannableString("请输入姓名");
         // 新建一个属性对象,设置文字的大小
@@ -53,6 +55,13 @@ public class ReallyName extends AppCompatActivity {
                     //提示弹框
                     SomeWrongDialog();
                 }
+            }
+        });
+
+        mImageBtn2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
 

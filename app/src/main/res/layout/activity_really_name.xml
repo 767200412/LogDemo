@@ -24,7 +24,7 @@
         android:layout_width="wrap_content"
         android:layout_height="45dp"
         android:layout_marginStart="44dp"
-        android:layout_marginTop="44dp"
+        android:layout_marginTop="70dp"
         android:text="您的真实姓名"
         android:textColor="#ff232323"
         android:textSize="32sp"

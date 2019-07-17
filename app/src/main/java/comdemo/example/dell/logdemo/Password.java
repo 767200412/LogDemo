@@ -15,6 +15,7 @@ public class Password extends AppCompatActivity {
     private ImageButton mImageBtn;
     private EditText mEditTextPassword;
     private Button mButtonLog;
+    private ImageButton mImageBtn2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +24,7 @@ public class Password extends AppCompatActivity {
         mEditTextPassword = (EditText)findViewById(R.id.et_PassWord);
         mButtonLog = (Button)findViewById(R.id.bt_log);
         mImageBtn = (ImageButton)findViewById(R.id.imageButton);
+        mImageBtn2 = (ImageButton)findViewById(R.id.imageButton2);
 
         //限制按钮激活
         new SomeMonitorEditText().SetMonitorEditText(mButtonLog, mEditTextPassword);
@@ -49,6 +51,13 @@ public class Password extends AppCompatActivity {
                 //跳转到设置真实姓名
                 Intent intent = new Intent(Password.this,ReallyName.class);
                 startActivity(intent);
+            }
+        });
+
+        mImageBtn2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
     }

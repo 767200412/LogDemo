@@ -1,19 +1,25 @@
 package comdemo.example.dell.logdemo;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 public class MessageVerification extends AppCompatActivity implements TextWatcher {
 
     private EditText editText1,editText2,editText3,editText4;
-    private TextView mTvPhone;
+    private TextView mTvPhone,mTv4;
     private MyDialog2 myDialog2;
     private String type;
+    private ImageButton mImageBtn;
+    private TimeCount time;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,6 +29,10 @@ public class MessageVerification extends AppCompatActivity implements TextWatche
         editText3 = (EditText)findViewById(R.id.editText8);
         editText4 = (EditText)findViewById(R.id.editText9);
         mTvPhone = (TextView)findViewById(R.id.textView3);
+        mTv4 =(TextView)findViewById(R.id.textView4);
+        mImageBtn = (ImageButton)findViewById(R.id.imageButton2);
+        //设置60s倒计时
+        time = new TimeCount(60000, 1000);
         Intent intent = getIntent();//声明一个对象，并获得跳转过来的Intent对象
         String phone = intent.getStringExtra("phone");//从intent对象中获得数据
         type = intent.getStringExtra("type");
@@ -31,7 +41,20 @@ public class MessageVerification extends AppCompatActivity implements TextWatche
         editText2.addTextChangedListener(this);
         editText3.addTextChangedListener(this);
         editText4.addTextChangedListener(this);
+        mImageBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+        mTv4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                time.start();
+            }
+        });
     }
+
 
 
     @Override
@@ -114,5 +137,31 @@ public class MessageVerification extends AppCompatActivity implements TextWatche
         });
 
         myDialog2.show();
+    }
+
+
+    //设置60s倒计时
+    class TimeCount extends CountDownTimer {
+
+        public TimeCount(long millisInFuture, long countDownInterval) {
+            super(millisInFuture, countDownInterval);
+        }
+
+        @Override
+        public void onTick(long millisUntilFinished) {
+            mTv4.setBackgroundColor(Color.parseColor("#B6B6D8"));
+            mTv4.setClickable(false);
+            mTv4.setText(" 重新发送("+millisUntilFinished / 1000+")");
+           // mTv4.setBackgroundColor(Color.parseColor("#000000"));
+            mTv4.setBackgroundColor(Color.WHITE);
+        }
+
+        @Override
+        public void onFinish() {
+            mTv4.setText("重新发送");
+            mTv4.setClickable(true);
+            mTv4.setBackgroundColor(Color.WHITE);
+
+        }
     }
 }

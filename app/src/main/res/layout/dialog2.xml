@@ -23,6 +23,7 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_gravity="center"
+            android:textColor="#ff232323"
            />
         <View
             android:layout_width="match_parent"
