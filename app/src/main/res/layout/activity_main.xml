@@ -114,12 +114,13 @@
         android:layout_marginTop="52dp"
         android:ems="10"
         android:inputType="number"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@+id/imageView4"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/textView10"
         app:layout_constraintTop_toBottomOf="@+id/textView11" />
 
-    <!--输入框 输入手机号-->
+    <!--输入框 输入密码-->
     <EditText
         android:id="@+id/et_PassWord"
         android:layout_width="0dp"
@@ -144,28 +145,22 @@
         app:layout_constraintTop_toTopOf="@+id/et_PhoneNumber"
         app:layout_constraintVertical_bias="1.0" />
 
-    <TextView
-        android:id="@+id/textView12"
+    <Spinner
+        android:id="@+id/spin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="-5dp"
-        android:layout_marginEnd="16dp"
         android:layout_marginTop="-5dp"
+        android:entries="@array/cities_data"
         android:text="中国(+86)"
         android:textColor="#ff238efa"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="@+id/et_PhoneNumber"
         app:layout_constraintEnd_toEndOf="@+id/et_PhoneNumber"
-        app:layout_constraintTop_toTopOf="@+id/et_PhoneNumber" />
+        app:layout_constraintTop_toTopOf="@+id/et_PhoneNumber"
+        app:layout_constraintVertical_bias="0.156" />
 
-    <ImageView
-        android:id="@+id/imageView5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@+id/textView12"
-        app:layout_constraintEnd_toEndOf="@+id/et_PhoneNumber"
-        app:layout_constraintTop_toTopOf="@+id/textView12"
-        app:srcCompat="@mipmap/ic_arrow_down_bule" />
+
 
     <ImageButton
         android:id="@+id/imageButton"

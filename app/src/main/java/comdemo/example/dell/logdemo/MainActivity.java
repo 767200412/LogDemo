@@ -110,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
 
                     //设置粗体
                     SpannableStringBuilder ssb = new SpannableStringBuilder(stringBuilder.toString());
-                    ssb.setSpan(new StyleSpan(Typeface.BOLD_ITALIC), 0, stringBuilder.toString().length(), Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+                    ssb.setSpan(new StyleSpan(Typeface.BOLD), 0, stringBuilder.toString().length(), Spanned.SPAN_INCLUSIVE_INCLUSIVE);
                     //ssb.setSpan(new ForegroundColorSpan(Color.BLACK), 0, stringBuilder.toString().length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                     mEditTextPhoneNumber.setText(new SpannableString(ssb));
 

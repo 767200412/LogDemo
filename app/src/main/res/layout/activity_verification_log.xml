@@ -96,13 +96,15 @@
         android:layout_marginTop="27dp"
         android:ems="10"
         android:inputType="number"
+        android:textStyle="bold"
+        android:textColor="#000000"
         app:layout_constraintEnd_toEndOf="@+id/erea"
         app:layout_constraintStart_toStartOf="@+id/erea"
         app:layout_constraintTop_toBottomOf="@+id/erea" />
 
 
 
-    <TextView
+    <Spinner
         android:id="@+id/textView12"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -112,18 +114,12 @@
         android:text="中国(+86)"
         android:textColor="#ff232323"
         android:textSize="16sp"
+        android:entries="@array/cities_data"
         app:layout_constraintBottom_toBottomOf="@+id/erea"
         app:layout_constraintEnd_toEndOf="@+id/erea"
         app:layout_constraintTop_toTopOf="@+id/erea" />
 
-    <ImageView
-        android:id="@+id/imageView5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@+id/textView12"
-        app:layout_constraintEnd_toEndOf="@+id/erea"
-        app:layout_constraintTop_toTopOf="@+id/textView12"
-        app:srcCompat="@mipmap/ic_arrow_left" />
+
 
 
 
