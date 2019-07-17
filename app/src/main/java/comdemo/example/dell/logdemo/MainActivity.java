@@ -221,6 +221,9 @@ public class MainActivity extends AppCompatActivity {
             public void onYesOnclick() {
                 myDialog.dismiss();
                 //前往密码忘记页面 带入手机值
+                Intent intent = new Intent(MainActivity.this,FindPassword.class);
+                intent.putExtra("phone",mEditTextPhoneNumber.getText().toString());
+                startActivity(intent);
             }
         });
         myDialog.setNoOnclickListener("取消", new MyDialog.onNoOnclickListener() {
