@@ -20,6 +20,9 @@ public class MessageVerification extends AppCompatActivity implements TextWatche
         editText3 = (EditText)findViewById(R.id.editText8);
         editText4 = (EditText)findViewById(R.id.editText9);
         editText1.addTextChangedListener(this);
+        editText2.addTextChangedListener(this);
+        editText3.addTextChangedListener(this);
+        editText4.addTextChangedListener(this);
     }
 
 
