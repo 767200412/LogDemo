@@ -33,7 +33,7 @@ public class Register extends AppCompatActivity {
         new SomeMonitorEditText().SetMonitorEditText(mBtnNext, mEtNumber);
 
         //跳转到登录界面
-        mBtnNext.setOnClickListener(new View.OnClickListener() {
+        mTvLog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Register.this,MainActivity.class);
@@ -42,7 +42,7 @@ public class Register extends AppCompatActivity {
         });
 
         //跳转到短信验证界面
-        mTvLog.setOnClickListener(new View.OnClickListener() {
+        mBtnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Register.this,MessageVerification.class);

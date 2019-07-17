@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
     private Button mButtonLog;
     private ImageButton mImageBtn;
     private MyDialog myDialog;
+    private MyDialog2 myDialog2;
     private TextView mTvReg;
     private int wrongNumber =0;
 
@@ -152,6 +153,7 @@ public class MainActivity extends AppCompatActivity {
                    //跳转到首页
                }
                else if(wrongNumber <=5){
+                   //错误提示框
                    SomeWrongDialog();
                    wrongNumber++;
                }
@@ -175,24 +177,24 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void SomeWrongDialog(){
-        myDialog=new MyDialog(MainActivity.this,R.style.MyDialog);
+        myDialog2=new MyDialog2(MainActivity.this,R.style.MyDialog);
         //myDialog.setTitle("警告！");
-        myDialog.setMessage("账号或者密码错误，请重新输入");
-        myDialog.setYesOnclickListener("确定", new MyDialog.onYesOnclickListener() {
+        myDialog2.setMessage("账号或者密码错误，请重新输入");
+        myDialog2.setYesOnclickListener("确定", new MyDialog2.onYesOnclickListener() {
             @Override
             public void onYesOnclick() {
-                myDialog.dismiss();
+                myDialog2.dismiss();
             }
         });
 
-        myDialog.show();
+        myDialog2.show();
     }
 
     private void FindPassWordDialog(){
         myDialog=new MyDialog(MainActivity.this,R.style.MyDialog);
         //myDialog.setTitle("警告！");
         myDialog.setMessage("密码错误，找回密码？");
-        myDialog.setYesOnclickListener("确定", new MyDialog.onYesOnclickListener() {
+        myDialog.setYesOnclickListener("找回密码", new MyDialog.onYesOnclickListener() {
             @Override
             public void onYesOnclick() {
                 myDialog.dismiss();

@@ -17,7 +17,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".Register" />
-        <activity android:name=".MessageVerification"></activity>
+        <activity android:name=".MessageVerification" />
+        <activity android:name=".Password"></activity>
     </application>
 
 </manifest>
