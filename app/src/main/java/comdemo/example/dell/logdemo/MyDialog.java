@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 /**
  * 创建自定义的Dialog，主要学习实现原理
- * Created by admin on 2017/8/30.
+ * Created by admin on 2019/7/16.
  */
 
 public class MyDialog extends Dialog {
