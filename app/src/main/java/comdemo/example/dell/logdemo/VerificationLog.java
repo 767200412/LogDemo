@@ -6,10 +6,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 public class VerificationLog extends AppCompatActivity {
     private EditText mEditTextPassword;
     private Button mButtonLog;
+    private ImageView mIvExit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,6 +19,7 @@ public class VerificationLog extends AppCompatActivity {
         setContentView(R.layout.activity_verification_log);
         mEditTextPassword = (EditText)findViewById(R.id.et_PhoneNumber);
         mButtonLog = (Button)findViewById(R.id.bt_log);
+        mIvExit = (ImageView)findViewById(R.id.imageView4);
 
 
         Intent intent = getIntent();//声明一个对象，并获得跳转过来的Intent对象
@@ -32,6 +35,16 @@ public class VerificationLog extends AppCompatActivity {
                 Intent intent = new Intent(VerificationLog.this,MessageVerification.class);
                 intent.putExtra("phone",mEditTextPassword.getText().toString());
                 intent.putExtra("type","log");
+                startActivity(intent);
+            }
+        });
+
+        mIvExit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(VerificationLog.this,MainActivity.class);
+                intent.putExtra(MainActivity.TAG_EXIT, true);
                 startActivity(intent);
             }
         });

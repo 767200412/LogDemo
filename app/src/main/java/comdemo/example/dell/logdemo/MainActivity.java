@@ -32,10 +32,13 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
+
+    public static final String TAG_EXIT = "exit";//退出程序标识
+
     private EditText mEditTextPhoneNumber;
     private EditText mEditTextPassword;
     private Button mButtonLog;
-    private ImageButton mImageBtn;
+    private ImageButton mImageBtn,mImageBtn2;
     private MyDialog myDialog;
     private MyDialog2 myDialog2;
     private TextView mTvReg,mTvLog,mTvForget;
@@ -50,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
         mEditTextPassword = (EditText)findViewById(R.id.et_PassWord);
         mButtonLog = (Button)findViewById(R.id.bt_log);
         mImageBtn = (ImageButton)findViewById(R.id.imageButton);
+        mImageBtn2 = (ImageButton)findViewById(R.id.imageView4);
         mTvReg = (TextView)findViewById(R.id.textView11);
         mTvLog = (TextView)findViewById(R.id.textView7);
         mTvForget = (TextView)findViewById(R.id.textView5);
@@ -194,6 +198,17 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //退出程序
+        mImageBtn2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(MainActivity.this,MainActivity.class);
+                intent.putExtra(MainActivity.TAG_EXIT, true);
+                startActivity(intent);
+            }
+        });
+
     }
 
 
@@ -235,5 +250,19 @@ public class MainActivity extends AppCompatActivity {
         });
         myDialog.show();
     }
+
+
+    //退出程序
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        if (intent != null) {
+            boolean isExit = intent.getBooleanExtra(TAG_EXIT, false);
+            if (isExit) {
+                this.finish();
+            }
+        }
+    }
+
 
 }
