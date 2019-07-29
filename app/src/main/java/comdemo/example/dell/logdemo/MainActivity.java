@@ -1,8 +1,10 @@
 package comdemo.example.dell.logdemo;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
@@ -30,6 +32,27 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
+import com.google.gson.stream.JsonReader;
+
+import java.io.IOException;
+import java.io.StringReader;
+import java.util.concurrent.TimeUnit;
+
+import comdemo.example.dell.logdemo.Beans.ResponseMessage;
+import comdemo.example.dell.logdemo.Beans.User;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.FormBody;
+import okhttp3.Headers;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+
 public class MainActivity extends AppCompatActivity {
 
 
@@ -43,6 +66,10 @@ public class MainActivity extends AppCompatActivity {
     private MyDialog2 myDialog2;
     private TextView mTvReg,mTvLog,mTvForget;
     private int wrongNumber =0;
+    private String phoneNumber,passWord;
+    private String url = "http://devapi.fccn.cc/Api/v1.1/Account/Login";
+    private String TAG = "Success";
+    private int flag = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -127,6 +154,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
+
             }
         });
 
@@ -151,21 +179,20 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
         //点击登录
         mButtonLog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               if(mEditTextPhoneNumber.getText().toString().equals("10086") && mEditTextPassword.getText().toString().equals("123456")){
-                   //跳转到首页
-               }
-               else if(wrongNumber <=5){
-                   //错误提示框
-                   SomeWrongDialog();
-                   wrongNumber++;
-               }
-               else {
-                   FindPassWordDialog();
-               }
+
+                phoneNumber = mEditTextPhoneNumber.getText().toString().replaceAll(" ","");
+                passWord = mEditTextPassword.getText().toString();
+                Log.d("phoneNumber",phoneNumber);
+                Log.d("passWord",passWord);
+
+                login(phoneNumber,passWord);
+                //Log.d("flag",String.valueOf(flag));
+
             }
         });
 
@@ -265,4 +292,170 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    //登录login
+    /*
+      返回的值 -1 正常
+              -2  连接失败
+              1-5 密码错误的次数
+              -3 其他错误
+     */
+    private void login(String phoneNumber,String passWord){
+
+        //输入的实体类
+        User user = new User();
+        user.setAccount(phoneNumber);
+        user.setPassword(passWord);
+        Log.e("account",user.getAccount());
+        Log.e("passWord",user.getPassword());
+
+        //使用Gson 添加 依赖 compile 'com.google.code.gson:gson:2.8.1'
+        Gson gson = new Gson();
+        //使用Gson将对象转换为json字符串
+        String json = gson.toJson(user);
+
+        //创建okHttpClient对象
+        OkHttpClient okHttpClient  = new OkHttpClient.Builder()
+                .connectTimeout(10, TimeUnit.SECONDS)
+                .writeTimeout(10,TimeUnit.SECONDS)
+                .readTimeout(20, TimeUnit.SECONDS)
+                .build();
+        //MediaType  设置Content-Type 标头中包含的媒体类型值
+        RequestBody requestBody = FormBody.create(MediaType.parse("application/json; charset=utf-8")
+                , json);
+        //设置request
+        Request request = new Request.Builder()
+                .url(url)//请求的url
+                .post(requestBody)
+                .build();
+
+        //创建Call
+        final Call call = okHttpClient.newCall(request);
+        //同步操作
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try{
+
+                    Response response = call.execute();
+                    String result = response.body().string();
+                    Log.d("Response",result);
+
+                    Gson gson = new GsonBuilder().serializeNulls().create();
+                    ResponseMessage responseMessage = gson.fromJson(result, new TypeToken<ResponseMessage>() {
+                    }.getType());
+
+
+                    if(response.code() == 400){
+                        //返回400 请求错误
+                        Log.e("Status Code:400","请求错误");
+                        // 读取错误信息
+                        if(responseMessage.getCanFailedCount() != null) {
+                            Log.d("CanFailedCount()", responseMessage.getCanFailedCount());
+                            flag = Integer.parseInt(responseMessage.getCanFailedCount());
+                        }
+
+                    }
+                    else if(response.code() == 200) {
+                        //正确 跳转到主页并保存数据
+
+
+
+                        //保存数据到SharedPreference
+                        //步骤1：创建一个SharedPreferences对象
+                        SharedPreferences sharedPreferences= getSharedPreferences("data", Context.MODE_PRIVATE);
+                        //步骤2： 实例化SharedPreferences.Editor对象
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        //步骤3：将获取过来的值放入文件
+                        editor.putString("ResponseMessage",result);
+                        //步骤4：提交
+                        editor.commit();
+                        flag = -1;
+
+
+                    }
+                    else {
+                        //其他错误
+                        flag = -3;
+                    }
+
+                }catch ( Exception e){
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+
+
+        if(flag == -1)
+        {
+            Log.d("log","success");
+        }
+        else if(flag >=0 && flag <5 )
+        {
+            SomeWrongDialog();
+        }
+        else if(flag == 5)
+        {
+            //错误5次 找回密码提示框
+            FindPassWordDialog();
+        }
+        else {
+            //其他错误
+        }
+        /*
+        //加入队列 异步操作
+        call.enqueue(new Callback() {
+            //请求错误回调方法
+            @Override
+            public void onFailure(Call call, IOException e) {
+                flag[0] = -2;
+                System.out.println("连接失败");
+                Log.e("WRONG","连接失败");
+
+            }
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String result=response.body().string();
+
+                Gson gson = new GsonBuilder().serializeNulls().create();
+                ResponseMessage responseMessage = gson.fromJson(result, new TypeToken<ResponseMessage>() {
+                }.getType());
+                Log.d("result",result);
+
+                if(response.code() == 400){
+                    //返回400 请求错误
+                    Log.e("Status Code:400","请求错误");
+                    // 读取错误信息
+                    if(responseMessage.getCanFailedCount() != null) {
+                        Log.d("CanFailedCount()", responseMessage.getCanFailedCount());
+                        flag[0] = Integer.parseInt(responseMessage.getCanFailedCount());
+                    }
+
+                }
+                else if(response.code() == 200) {
+                    //正确 跳转到主页并保存数据
+
+
+
+                    //保存数据到SharedPreference
+                    //步骤1：创建一个SharedPreferences对象
+                    SharedPreferences sharedPreferences= getSharedPreferences("data", Context.MODE_PRIVATE);
+                    //步骤2： 实例化SharedPreferences.Editor对象
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    //步骤3：将获取过来的值放入文件
+                    editor.putString("ResponseMessage",result);
+                    //步骤4：提交
+                    editor.commit();
+                    flag[0] = -1;
+
+                }
+                else {
+                    //其他错误
+                    flag[0] = -3;
+                }
+            }
+        });
+        */
+
+    }
 }
+
